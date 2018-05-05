@@ -6,9 +6,10 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class AnagramThing {
-	ArrayList <String>anagrams= new ArrayList<String>();
+	ArrayList<String> anagrams = new ArrayList<String>();
+
 	public static void main(String[] args) {
-		AnagramThing at= new AnagramThing();
+		AnagramThing at = new AnagramThing();
 		try {
 			at.AnagramsFinder();
 		} catch (FileNotFoundException e) {
@@ -16,56 +17,49 @@ public class AnagramThing {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void AnagramsFinder() throws FileNotFoundException {
-		
+
 		Scanner scan = new Scanner(new File("words.txt"));
-		
-		String s =JOptionPane.showInputDialog("Enter a word");
-		char[] c= s.toCharArray();
-		
-		
-		while(scan.hasNextLine()) {
-			String n=scan.nextLine();
-		
-			int x=0;
-			for (int i = 0; i < c.length; i++) {
-			
-				if (n.equals("car")) {
-					System.out.println("yay");
+
+		String s = JOptionPane.showInputDialog("Enter a word");
+		char[] c = s.toCharArray();
+		String q = "";
+		while (scan.hasNextLine()) {
+			int x = 0;
+			String n = scan.nextLine();
+			String original = n;
+			if (s.length() == n.length()) {
+				if (n.equals("resistance")) {
+					System.out.println("stop");
 				}
-				if (n.contains(Character.toString(c[i]))) {
-					System.out.println("yay1");
-					x+=1;
+
+				for (int i = 0; i < c.length; i++) {
+					for (int j = 0; j < n.length(); j++) {
+						if (c[i] == n.charAt(j)) {
+							n = n.replaceFirst(n.charAt(j) + "", "*");
+							x += 1;
+							break;
+
+						}
+					}
+				}
+
+				if (x == s.length()) {
+					anagrams.add(original);
+
 				}
 			}
-			String q="";
-			if(x==s.length()) {
-				System.out.println("yay2");
-				anagrams.add(n);
-				
-			}
-			else {
-				q+="none";
-				
-			}
-			
-			
-			for (int i = 0; i < anagrams.size(); i++) {
-				q+=anagrams.get(i)+", ";
-				
-				
-			}
-			JOptionPane.showMessageDialog(null, q);
-			
-			
-			
-			
-			
-			
+
 		}
-		
-		
+
+		for (int i = 0; i < anagrams.size(); i++) {
+			q += anagrams.get(i) + ", ";
+
+		}
+
+		JOptionPane.showMessageDialog(null, q);
+
 	}
-	
+
 }
